@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "Add track to top of playlist",
+    "version": "1.0",
+    "description": "When adding a track to a Spotify playlist, add the track to the top of the playlist instead of the bottom",
+    "icons": {
+        "48": "icon.svg",
+        "96": "icon.svg"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://open.spotify.com/*"
+            ],
+            "js": [
+                "inject.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "content.js"
+    ]
+}
