@@ -13,11 +13,9 @@
                 "https://open.spotify.com/*"
             ],
             "js": [
-                "inject.js"
-            ]
+                "content.js"
+            ],
+            "world": "MAIN"
         }
-    ],
-    "web_accessible_resources": [
-        "content.js"
     ]
 }
