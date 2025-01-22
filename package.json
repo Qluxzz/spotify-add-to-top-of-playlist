@@ -8,7 +8,8 @@
     "vitest": "^3.0.3"
   },
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "pack": "zip -r -FS extension.zip content.js icon.svg manifest.json"
   },
   "repository": {
     "type": "git",
