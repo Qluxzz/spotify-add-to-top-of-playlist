@@ -10,22 +10,31 @@ window.fetch = async (...args) => {
 
   if (typeof initOptions.body !== "string") return getOriginalResponse()
 
+  let requestBody
+
   try {
-    const requestBody = JSON.parse(initOptions.body)
-
-    if (requestBody.operationName !== "addToPlaylist")
-      return getOriginalResponse()
-
-    requestBody.variables.newPosition.moveType = "TOP_OF_PLAYLIST"
-
-    initOptions.body = JSON.stringify(requestBody)
+    requestBody = JSON.parse(initOptions.body)
   } catch (error) {
     console.error(
-      `requestBody "${initOptions.body}" couldn't be parsed or didn't have the expected key 'variables.newPosition.moveType'. This can happen if Spotify have updated their API. Please open an issue on https://github.com/qluxzz/spotify-add-to-top-of-playlist/issues/new\n${error}`
+      `Request body could not be parsed. This can happen if Spotify have updated their API. Please open an issue on https://github.com/qluxzz/spotify-add-to-top-of-playlist/issues/new\nRequest body was ${initOptions.body}\n${error}`
+    )
+    return getOriginalResponse()
+  }
+
+  if (requestBody.operationName !== "addToPlaylist")
+    return getOriginalResponse()
+
+  try {
+    requestBody.variables.newPosition.moveType = "TOP_OF_PLAYLIST"
+  } catch (error) {
+    console.error(
+      `Request body didn't have the expected key 'variables.newPosition.moveType'. This can happen if Spotify have updated their API. Please open an issue on https://github.com/qluxzz/spotify-add-to-top-of-playlist/issues/new\nRequest body was ${requestBody}\n${error}`
     )
 
     return getOriginalResponse()
   }
+
+  initOptions.body = JSON.stringify(requestBody)
 
   return _fetch(resource, initOptions)
 }
