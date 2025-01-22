@@ -41,5 +41,4 @@ window.Qluxzz.fetchInterceptor =
     return fetch(resource, initOptions)
   }
 
-const _fetch = window.fetch
-window.fetch = window.Qluxzz.fetchInterceptor(_fetch)
+window.fetch = window.Qluxzz.fetchInterceptor(window.fetch)
